@@ -1,15 +1,30 @@
 <?php
 include 'session.php';
 include 'navbar.php';
+include 'classes/Blog.php';
+if (! empty($_POST)){
+    if (isset($_POST['title']) and isset($_POST['body'])){
+        $blog = new Blog();
+        $blog->title = $_POST['title'];
+        $blog->body = $_POST['body'];
+        $blog->author = $_SESSION['uname'];
+        if($blog->insert()){
+            echo "Blog created successfully. Create another one";
+        } else {
+            echo "Something went wrong. Please contact the admin";
+        }
+    }
+}
+
 ?>
 <div class="row">
 	<div class="col-md-2"></div>
 	<div class="col-md-8">
-		<form class="form-horizontal">
+		<form class="form-horizontal" method=POST>
 			<fieldset>
 
 				<!-- Form Name -->
-				<legend>Form Name</legend>
+				<legend>Create a Blog Post</legend>
 
 				<!-- Text input-->
 				<div class="form-group">
